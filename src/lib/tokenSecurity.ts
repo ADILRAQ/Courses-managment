@@ -8,7 +8,7 @@ export async function createToken(payload: { id: number; username: string }): Pr
   const token = await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })  
     .setIssuedAt()
-    .setExpirationTime('1s') // Token expiration time set to 1 day
+    .setExpirationTime('1d') // Token expiration time set to 1 day
     .sign(JWT_SECRET);
   return token;
 }

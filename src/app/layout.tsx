@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
+import AuthRoute from "@/components/AuthRoute";
 
 export const metadata: Metadata = {
   title: "Coursify",
@@ -11,8 +12,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className="font-poppins bg-background flex flex-col h-screen gap-7">
-        <NavBar />
-        {children}
+          <AuthRoute>
+            <NavBar />
+            {children}
+          </AuthRoute>
       </body>
     </html>
   );

@@ -1,10 +1,11 @@
+'use client'
 import { Role } from "@prisma/client";
-import { createContext } from "react";
+import React, { SetStateAction } from "react";
 
-interface UserData {
-  id        :number
-  username  :string
-  role      :Role
+export interface UserData {
+  id: number;
+  username: string;
+  role: Role;
 }
 
-const UserContext = createContext<UserData | null>(null);
+export const UserContext = React.createContext<UserData | null>(null);

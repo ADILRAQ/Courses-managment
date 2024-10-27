@@ -9,8 +9,8 @@ export async function POST(req :Request) {
 
   const data = await createUser(username, password, role);
 
-  if (data.status === 201 && data.id != undefined) {
-    const token = await createToken({id: data.id, username});
+  if (data.status === 201 && data.user != undefined) {
+    const token = await createToken({id: data.user.id, username});
 
     (await cookies()).set({
       name: 'authToken',
@@ -22,7 +22,7 @@ export async function POST(req :Request) {
       maxAge: 60 * 60 * 24,
     });
 
-    return NextResponse.json({message: data.message, id: data.id}, {status: data.status});
+    return NextResponse.json({...data.user}, {status: data.status});
   }
   else
     return NextResponse.json({message: data.message}, {status: data.status});

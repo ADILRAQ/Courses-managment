@@ -8,7 +8,7 @@ export const createUser = async (username: string, password: string, role: Role)
 
     const hashed = await hashPassword(password);
 
-    const data = await _prisma.user.create({
+    const user = await _prisma.user.create({
       data: {
         username,
         password: hashed,
@@ -19,7 +19,7 @@ export const createUser = async (username: string, password: string, role: Role)
     return {
       message: 'User created !',
       status: 201,
-      id: data.id
+      user
     };
 
   } catch (e: any) {
@@ -43,6 +43,30 @@ export const getUser = async (username: string) => {
     const user = await _prisma.user.findUnique({
       where: {
         username
+      },
+      select: {
+        id: true,
+        username: true,
+        password: true,
+        role: true
+      }
+    });
+
+    return user;
+
+  } catch(e) {
+    return null;
+  }
+
+}
+
+export const getUserById = async (id: number) => {
+
+  try {
+
+    const user = await _prisma.user.findUnique({
+      where: {
+        id
       },
       select: {
         id: true,

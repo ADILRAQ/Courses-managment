@@ -35,9 +35,10 @@ const SignupPage = () => {
       console.log('Form Submitted:', values);
       const res = await _axios.post('/signup', {...values, role});
 
-      res.status === 201 ?
-        router.push('/')
-      :
+      if (res.status === 201) {
+        router.push('/');
+      }
+      else
         toast.error(res.data.message);
     },
   });

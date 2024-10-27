@@ -29,9 +29,10 @@ const LoginPage = () => {
 
       const res = await _axios.post('/login', {...values});
 
-      res.status === 201 ?
-        router.push('/')
-      :
+      if(res.status === 201) {
+        router.push('/');
+      }
+      else
         toast.error(res.data.message);
     },
   });

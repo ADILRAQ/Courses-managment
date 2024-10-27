@@ -1,13 +1,17 @@
 'use client';
 import Card from "@/components/Card";
+import { UserContext } from "@/context/UserContext";
 import _axios from "@/lib/_axios";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 export default function Courses() {
 
+  const userContext = useContext(UserContext);
+
   useEffect(() => {
     const data = async () => {
-      await _axios.get('/course');
+      const res = await _axios.get('/course');
+      console.log(res);
     }
     data();
 

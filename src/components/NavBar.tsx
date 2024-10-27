@@ -1,6 +1,10 @@
+'use client';
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const NavBar = () => {
+
+  const router = useRouter();
 
   return (
     <div className="w-full px-8 py-6 flex justify-between">
@@ -9,7 +13,7 @@ const NavBar = () => {
         <button 
           type="button"
           className="px-3 py-2 border-transparent border-2 hover:border-b-blue-500 hover:border-b-2 transition-all duration-75 ease-in"
-          // onClick={()=>''}
+          onClick={()=>router.push('/courses')}
           >
           Courses
         </button>
@@ -17,7 +21,7 @@ const NavBar = () => {
         <button 
           type="button"
           className="px-3 py-2 border-transparent border-2 hover:border-b-blue-500 hover:border-b-2 transition-all duration-75 ease-in"
-          // onClick={()=>''}
+          onClick={()=>router.push('/dashboard')}
         >
           Dashbord
         </button>

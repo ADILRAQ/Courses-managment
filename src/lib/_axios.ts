@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Router } from "next/router";
 
 const _axios = axios.create(
   {
@@ -17,9 +18,9 @@ _axios.interceptors.response.use(
     if (error.response) {
       const {status} = error.response;
 
-      // redirect to login of it is not /login or /signin
+      // redirect to login of it is not /login
       if (status === 400)
-        console.log('Redirect to login !');
+        window.location.href = '/login';
       else
         return error.response;
     }

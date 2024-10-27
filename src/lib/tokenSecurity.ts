@@ -1,20 +1,25 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+// src/utils/auth.ts
+import { SignJWT, jwtVerify, decodeJwt } from 'jose';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'adminadminhhh';
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'adminadminhhh'); // Ensure this secret is kept safe and secure
 
-export function createToken(payload: {id: number, username: string}): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' });
+// Create a JWT token
+export async function createToken(payload: { id: number; username: string }): Promise<string> {
+  const token = await new SignJWT(payload)
+    .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })  
+    .setIssuedAt()
+    .setExpirationTime('1s') // Token expiration time set to 1 day
+    .sign(JWT_SECRET);
+  return token;
 }
 
-export function verifyToken(token: string): { valid: boolean; expired: boolean; decoded?: JwtPayload | string } {
+// Verify a JWT token
+export async function verifyToken(token: string): Promise<{ valid: boolean; expired: boolean; decoded?: object }> {
   try {
-
-    const decoded = jwt.verify(token, JWT_SECRET);
-    return { valid: true, expired: false, decoded };
-
+    const { payload } = await jwtVerify(token, JWT_SECRET);
+    return { valid: true, expired: false, decoded: payload };
   } catch (error: any) {
-
-    if (error.name === 'TokenExpiredError') {
+    if (error.code === 'ERR_JWT_EXPIRED') {
       return { valid: false, expired: true };
     } else {
       return { valid: false, expired: false };

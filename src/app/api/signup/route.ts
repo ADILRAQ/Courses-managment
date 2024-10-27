@@ -10,7 +10,7 @@ export async function POST(req :Request) {
   const data = await createUser(username, password, role);
 
   if (data.status === 201 && data.id != undefined) {
-    const token = createToken({id: data.id, username});
+    const token = await createToken({id: data.id, username});
 
     (await cookies()).set({
       name: 'authToken',

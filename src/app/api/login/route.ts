@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     const isCorrect = await comparePasswords(password, user.password);
     if (isCorrect) {
 
-      const token = createToken({id: user.id, username});
+      const token = await createToken({id: user.id, username});
 
       (await cookies()).set({
         name: 'authToken',

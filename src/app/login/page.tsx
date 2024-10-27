@@ -68,9 +68,12 @@ const LoginPage = () => {
       </div>
 
       {/* <Button type="submit" disabled={formik.isSubmitting}> */}
-      <div className='self-center'>
-        <Button type="submit" onClick={()=>''}>
+      <div className='self-center flex gap-3'>
+        <Button type="submit">
           Login
+        </Button>
+        <Button type="button" onClick={()=>router.push('/signup')}>
+          Signup
         </Button>
       </div>
       <Toaster />

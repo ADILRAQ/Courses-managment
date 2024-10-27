@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+
   return (
     <html lang="en">
       <body className="font-poppins bg-background flex flex-col h-screen gap-7">

@@ -1,7 +1,12 @@
 'use client';
 import Button from '@/components/Button';
 import FieldError from '@/components/FieldError';
+import _axios from '@/lib/_axios';
+import { Role } from '@prisma/client';
 import { useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import * as Yup from 'yup';
 
 interface SignupForm {
@@ -18,15 +23,22 @@ const SignupSchema = Yup.object().shape({
     .required('Required'),
 });
 
-
 const SignupPage = () => {
+
+  const [role, setRole] = useState<Role>('STUDENT');
+  const router = useRouter();
 
   const formik = useFormik<SignupForm>({
     initialValues: { username: '', password: '', repassword: '' },
     validationSchema: SignupSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log('Form Submitted:', values);
-      // Handle your form submission here, such as calling an API
+      const res = await _axios.post('/signup', {...values, role});
+
+      res.status === 201 ?
+        router.push('/')
+      :
+        toast.error(res.data.message);
     },
   });
 
@@ -73,12 +85,33 @@ const SignupPage = () => {
         ) : null}
       </div>
 
+      <div className='flex flex-col items-center gap-1 w-[80%]'>
+        <h1>Choose your role</h1>
+        <div className='flex justify-center gap-7'>
+          <div className={`px-4 py-2 text-sm border-2 cursor-pointer ${
+            role !== 'STUDENT' ? 'border-blue-500' : 'border-orange-600'
+            }`}
+            onClick={() => setRole('STUDENT')}
+          >
+            STUDENT
+          </div>
+          <div className={`px-4 py-2 text-sm border-2 cursor-pointer ${
+            role !== 'INSTRUCTOR' ? 'border-blue-500' : 'border-orange-600'
+            }`}
+            onClick={() => setRole('INSTRUCTOR')}
+          >
+            INSTRUCTOR
+          </div>
+        </div>
+      </div>
+
       {/* <Button type="submit" disabled={formik.isSubmitting}> */}
       <div className='self-center'>
         <Button type="submit">
           Login
         </Button>
       </div>
+      <Toaster />
     </form>
   );
 }

@@ -4,7 +4,7 @@ const NavBar = () => {
 
   return (
     <div className="w-full px-8 py-6 flex justify-between">
-      <Image src={'logo.svg'} alt="Coursify Logo" width={40} height={41} />
+      <Image src={'logo.svg'} alt="Coursify Logo" width={40} height={40} />
       <div className="flex gap-3">
         <button 
           type="button"

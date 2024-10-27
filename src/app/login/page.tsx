@@ -1,7 +1,10 @@
 'use client';
 import Button from '@/components/Button';
 import FieldError from '@/components/FieldError';
+import _axios from '@/lib/_axios';
 import { useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
+import toast, { Toaster } from 'react-hot-toast';
 import * as Yup from 'yup';
 
 interface LoginForm {
@@ -14,15 +17,22 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().min(6, 'Password must be at least 6 characters').required('Required'),
 });
 
-
 const LoginPage = () => {
+
+  const router = useRouter();
 
   const formik = useFormik<LoginForm>({
     initialValues: { username: '', password: '' },
     validationSchema: LoginSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log('Form Submitted:', values);
-      // Handle your form submission here, such as calling an API
+
+      const res = await _axios.post('/login', {...values});
+
+      res.status === 201 ?
+        router.push('/')
+      :
+        toast.error(res.data.message);
     },
   });
 
@@ -62,6 +72,7 @@ const LoginPage = () => {
           Login
         </Button>
       </div>
+      <Toaster />
     </form>
   );
 }

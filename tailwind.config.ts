@@ -9,9 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "#E6F0FF",
       },
+      fontFamily: {
+        'poppins': ['Poppins', 'sans-serif']
+      },
+      boxShadow: {
+        'card': '0 12px 40px #CCD6E5'
+      }
     },
   },
   plugins: [],

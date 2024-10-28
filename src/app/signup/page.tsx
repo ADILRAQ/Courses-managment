@@ -32,7 +32,7 @@ const SignupPage = () => {
     initialValues: { username: '', password: '', repassword: '' },
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
-      console.log('Form Submitted:', values);
+      // console.log('Form Submitted:', values);
       const res = await _axios.post('/signup', {...values, role});
 
       if (res.status === 201) {

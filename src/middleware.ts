@@ -1,8 +1,7 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { createToken, verifyToken } from './lib/tokenSecurity';
-import { decodeJwt } from 'jose';
+import { verifyToken } from './lib/tokenSecurity';
 
 declare module 'next/server' {
   interface NextResponse {

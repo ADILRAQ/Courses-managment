@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Button from "./Button";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import _axios from "@/lib/_axios";
 
-const Card :React.FC<{id: number, title: string, description: string}> = ({id, title, description}) => {
+const Card :React.FC<{id: number, title: string, description: string, setChnage?: Dispatch<SetStateAction<boolean>>}> = ({id, title, description, setChnage}) => {
 
   const [modify, setModify] = useState<boolean>(false);
-  const [Mtitle, setTitle] = useState<string>(title);
-  const [Mdescription, setDescription] = useState<string>(description);
+  const [Mtitle, setTitle] = useState<string>('');
+  const [Mdescription, setDescription] = useState<string>('');
 
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -23,8 +24,35 @@ const Card :React.FC<{id: number, title: string, description: string}> = ({id, t
     else if (!Mtitle && !Mdescription)
       toast.error("Seriously, no updates ");
     else {
-      
+      const res = await _axios.put(`/course/${id}`, {
+        title: Mtitle,
+        description: Mdescription,
+      });
+
+      if (res.status === 201) {
+        toast.success('Updated !');
+        setModify(false);
+        if (setChnage)
+          setChnage(value => !value);
+        setTitle('');
+        setDescription('');
+      }
+      else
+        toast.error("Did not update !");
     }
+  }
+
+  const handleDelete = async () => {
+    const res = await _axios.delete(`/course/${id}`);
+
+    if (res.status === 201) {
+      toast.success('Deleted !');
+      setModify(false);
+      if (setChnage)
+        setChnage(value => !value);
+    }
+    else
+      toast.error("Did not delete !");
   }
 
   return (
@@ -57,10 +85,19 @@ const Card :React.FC<{id: number, title: string, description: string}> = ({id, t
       </div>
       <div className="self-end py-2 px-2 gap-3 flex">
         {
-          modify &&
-          <Button type="button" onClick={() => setModify(true)}>Submit</Button>
+          !!setChnage && modify &&
+          <>
+            <Button type="submit" onClick={() => handleModify()}>Submit</Button>
+            <Button type="button" onClick={() => setModify(false)}>Cancel</Button>
+          </>
         }
-        <Button type="button" onClick={() => setModify(true)}>Modify</Button>
+        {
+          !!setChnage && !modify &&
+          <>
+            <Button type="button" onClick={() => handleDelete()} >Delete</Button>
+            <Button type="button" onClick={() => setModify(true)}>Modify</Button>
+          </>
+        }
       </div>
       <Toaster />
     </div>

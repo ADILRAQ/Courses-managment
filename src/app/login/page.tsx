@@ -25,7 +25,7 @@ const LoginPage = () => {
     initialValues: { username: '', password: '' },
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
-      console.log('Form Submitted:', values);
+      // console.log('Form Submitted:', values);
 
       const res = await _axios.post('/login', {...values});
 

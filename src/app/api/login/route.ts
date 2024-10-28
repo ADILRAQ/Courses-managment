@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
   const {username, password} = await req.json();
 
-  console.log(username, password);
+  // console.log(username, password);
 
   const user = await getUser(username);
 

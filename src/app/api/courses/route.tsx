@@ -1,14 +1,12 @@
-import { createCourse, getUserCourses } from "@/services/courseServices";
+import { createCourse, getCourses } from "@/services/courseServices";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET() {
 
-  const userId = Number(req.headers.get('X-User-Id'));
-
-  const courses = await getUserCourses(userId);
+  const courses = await getCourses();
   // console.log('Courses:', courses)
 
-  return NextResponse.json({...courses}, {status: 200});
+  return NextResponse.json({courses}, {status: 200});
 }
 
 export async function POST(req :Request) {

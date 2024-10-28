@@ -1,5 +1,5 @@
 // src/utils/auth.ts
-import { SignJWT, jwtVerify, decodeJwt } from 'jose';
+import { SignJWT, jwtVerify } from 'jose';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'adminadminhhh'); // Ensure this secret is kept safe and secure
 

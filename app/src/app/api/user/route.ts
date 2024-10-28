@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   if (!user)
     return NextResponse.json({}, {status: 400});
 
-  const {id, username, role} = user;
+  const {id, username} = user;
 
-  return NextResponse.json({id, username, role}, {status: 200});
+  return NextResponse.json({id, username}, {status: 200});
 }

@@ -51,7 +51,6 @@ const Dashboard = () => {
       // console.log('Form Submitted:', values);
 
       const res = await _axios.post('/course', values);
-
       if (res.status === 201) {
         toast.success("Course created !");
         setTimeout(() => {

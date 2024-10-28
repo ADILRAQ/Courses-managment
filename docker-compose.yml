@@ -1,0 +1,29 @@
+
+networks:
+  Coursify:
+    name: Coursify
+    driver: bridge
+
+services:
+  postgresSQL:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    env_file:
+      - app/.env
+    networks:
+      - Coursify
+
+  app:
+    image: app:latest
+    container_name: app
+    build: app/
+    depends_on:
+      - postgresSQL
+    env_file:
+      - app/.env
+    restart: always
+    networks:
+      - Coursify
+    ports:
+      - '3000:3000'

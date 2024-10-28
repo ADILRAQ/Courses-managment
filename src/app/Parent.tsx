@@ -12,10 +12,10 @@ const Parent :React.FC<{children: React.ReactNode}> = ({children}) => {
     const getUser = async () => {
       const res = await _axios.get('/user');
 
-      const {id, username, role} = res.data;
+      const {id, username} = res.data;
 
       setUser({
-        id, username, role
+        id, username
       })
     }
 

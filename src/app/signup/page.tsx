@@ -2,7 +2,7 @@
 import Button from '@/components/Button';
 import FieldError from '@/components/FieldError';
 import _axios from '@/lib/_axios';
-import { Role } from '@prisma/client';
+// import { Role } from '@prisma/client';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -25,7 +25,7 @@ const SignupSchema = Yup.object().shape({
 
 const SignupPage = () => {
 
-  const [role, setRole] = useState<Role>('STUDENT');
+  // const [role, setRole] = useState<Role>('INSTRUCTOR');
   const router = useRouter();
 
   const formik = useFormik<SignupForm>({
@@ -33,7 +33,8 @@ const SignupPage = () => {
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
       // console.log('Form Submitted:', values);
-      const res = await _axios.post('/signup', {...values, role});
+      console.log('Hello');
+      const res = await _axios.post('/signup', {...values});
 
       if (res.status === 201) {
         router.push('/');
@@ -86,7 +87,7 @@ const SignupPage = () => {
         ) : null}
       </div>
 
-      <div className='flex flex-col items-center gap-1 w-[80%]'>
+      {/* <div className='flex flex-col items-center gap-1 w-[80%]'>
         <h1>Choose your role</h1>
         <div className='flex justify-center gap-7'>
           <div className={`px-4 py-2 text-sm border-2 cursor-pointer ${
@@ -104,7 +105,7 @@ const SignupPage = () => {
             INSTRUCTOR
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* <Button type="submit" disabled={formik.isSubmitting}> */}
       <div className='self-center flex gap-3'>

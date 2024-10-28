@@ -5,9 +5,9 @@ import { cookies } from "next/headers";
 
 export async function POST(req :Request) {
 
-  const {username, password, role} = await req.json();
+  const {username, password} = await req.json();
 
-  const data = await createUser(username, password, role);
+  const data = await createUser(username, password);
 
   if (data.status === 201 && data.user != undefined) {
     const token = await createToken({id: data.user.id, username});

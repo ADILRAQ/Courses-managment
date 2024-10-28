@@ -1,8 +1,8 @@
 import _prisma from "@/lib/prismaClient"
 import { hashPassword } from "@/lib/pswdSecurity";
-import { Role } from "@prisma/client";
+// import { Role } from "@prisma/client";
 
-export const createUser = async (username: string, password: string, role: Role) => {
+export const createUser = async (username: string, password: string) => {
 
   try {
 
@@ -12,7 +12,7 @@ export const createUser = async (username: string, password: string, role: Role)
       data: {
         username,
         password: hashed,
-        role
+        // role
       }
     });
 
@@ -48,7 +48,7 @@ export const getUser = async (username: string) => {
         id: true,
         username: true,
         password: true,
-        role: true
+        // role: true
       }
     });
 
@@ -72,7 +72,7 @@ export const getUserById = async (id: number) => {
         id: true,
         username: true,
         password: true,
-        role: true
+        // role: true
       }
     });
 

@@ -27,3 +27,4 @@ The easy part is to run this command:
 docker-compose up
 
 ```
+And go to this link: [localhost:3000](http://localhost:3000)  
